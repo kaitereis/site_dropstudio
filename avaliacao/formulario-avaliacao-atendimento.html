@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Atendimento ATENDEFÁCIL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #007f6b 0%, #40c649 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .question {
+            margin-bottom: 35px;
+        }
+
+        .question-label {
+            display: block;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .rating-btn {
+            flex: 1;
+            min-width: 0;
+            padding: 15px 8px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .rating-btn:hover {
+            border-color: #;
+            transform: translateY(-2px);
+        }
+
+        .rating-btn.selected {
+            background: linear-gradient(135deg, #007f6b 0%, #40c649 100%);
+            color: white;
+            border-color: #007f6b;
+        }
+
+        .rating-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #007f6b;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .textarea-container {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .textarea-container.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #007f6b;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #007f6b 0%, #40c649 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .success-message h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .question-label {
+                font-size: 16px;
+            }
+
+            .rating-container {
+                gap: 4px;
+            }
+
+            .rating-btn {
+                padding: 12px 4px;
+                font-size: 15px;
+            }
+
+            .radio-option label {
+                font-size: 15px;
+            }
+
+            textarea {
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                font-size: 16px;
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 15px;
+            }
+
+            .rating-btn {
+                padding: 10px 2px;
+                font-size: 14px;
+            }
+
+            .rating-container {
+                gap: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="avaliacaoForm">
+            <div class="header">
+                <h1>Avaliação de Atendimento</h1>
+                <img src=".\img\logo.png" alt="ATENDEFÁCIL" style="width: 250px; height: auto;">
+                <p>Sua opinião é muito importante para nós!</p>
+            </div>
+
+            <div class="question">
+                <label class="question-label">
+                    1) Em uma escala de 0 a 10, qual nota você daria para o meu atendimento? <span class="required">*</span>
+                </label>
+                <div class="rating-container">
+                    <button type="button" class="rating-btn" data-value="0">0</button>
+                    <button type="button" class="rating-btn" data-value="1">1</button>
+                    <button type="button" class="rating-btn" data-value="2">2</button>
+                    <button type="button" class="rating-btn" data-value="3">3</button>
+                    <button type="button" class="rating-btn" data-value="4">4</button>
+                    <button type="button" class="rating-btn" data-value="5">5</button>
+                    <button type="button" class="rating-btn" data-value="6">6</button>
+                    <button type="button" class="rating-btn" data-value="7">7</button>
+                    <button type="button" class="rating-btn" data-value="8">8</button>
+                    <button type="button" class="rating-btn" data-value="9">9</button>
+                    <button type="button" class="rating-btn" data-value="10">10</button>
+                </div>
+                <div class="rating-labels">
+                    <span>Péssimo</span>
+                    <span>Excelente</span>
+                </div>
+                <input type="hidden" id="nota" name="nota" required>
+            </div>
+
+            <div class="question">
+                <label class="question-label">
+                    2) O seu problema foi resolvido? <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="resolvido-sim" name="problema_resolvido" value="sim" required>
+                        <label for="resolvido-sim">Sim, meu problema foi resolvido</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="resolvido-nao" name="problema_resolvido" value="nao">
+                        <label for="resolvido-nao">Não, meu problema não foi resolvido</label>
+                    </div>
+                </div>
+                <div class="textarea-container" id="descricaoContainer">
+                    <textarea 
+                        id="descricao" 
+                        name="descricao" 
+                        placeholder="Por favor, descreva o que aconteceu para que possamos entender melhor e ajudá-lo..."
+                    ></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                Enviar Avaliação
+            </button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h2>Obrigado pela sua avaliação!</h2>
+            <p>Seu feedback é muito importante para melhorarmos nosso atendimento.</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('avaliacaoForm');
+        const ratingBtns = document.querySelectorAll('.rating-btn');
+        const notaInput = document.getElementById('nota');
+        const radioNao = document.getElementById('resolvido-nao');
+        const radioSim = document.getElementById('resolvido-sim');
+        const descricaoContainer = document.getElementById('descricaoContainer');
+        const descricaoTextarea = document.getElementById('descricao');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        // Variável para armazenar os dados do formulário
+        let formData = {
+            nota: null,
+            problema_resolvido: null,
+            descricao: null
+        };
+
+        // Gerenciar seleção de nota
+        ratingBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                ratingBtns.forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                const value = this.getAttribute('data-value');
+                notaInput.value = value;
+                formData.nota = parseInt(value);
+                checkFormValidity();
+            });
+        });
+
+        // Gerenciar seleção de problema resolvido
+        [radioSim, radioNao].forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (radioNao.checked) {
+                    descricaoContainer.classList.add('show');
+                    descricaoTextarea.required = true;
+                } else {
+                    descricaoContainer.classList.remove('show');
+                    descricaoTextarea.required = false;
+                    descricaoTextarea.value = '';
+                    formData.descricao = null;
+                }
+                formData.problema_resolvido = this.value;
+                checkFormValidity();
+            });
+        });
+
+        // Atualizar descrição no formData
+        descricaoTextarea.addEventListener('input', function() {
+            formData.descricao = this.value.trim() || null;
+            checkFormValidity();
+        });
+
+        // Verificar validade do formulário
+        function checkFormValidity() {
+            const isValid = formData.nota !== null && 
+                          formData.problema_resolvido !== null &&
+                          (formData.problema_resolvido === 'sim' || 
+                           (formData.problema_resolvido === 'nao' && formData.descricao));
+            
+            submitBtn.disabled = !isValid;
+        }
+
+        // Enviar formulário
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Aqui você pode enviar os dados para seu sistema
+            console.log('Dados da avaliação:', formData);
+            
+            // Simular envio e mostrar mensagem de sucesso
+            form.style.display = 'none';
+            successMessage.classList.add('show');
+            
+            // INTEGRAÇÃO: Aqui você adicionaria o código para enviar os dados
+            // Exemplo com fetch:
+            /*
+            fetch('/api/avaliacao', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Sucesso:', data);
+                form.style.display = 'none';
+                successMessage.classList.add('show');
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+            });
+            */
+        });
+    </script>
+</body>
+</html>

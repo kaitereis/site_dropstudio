@@ -1,0 +1,9 @@
+{
+    "host": "ftp.dropstudio.site",
+    "username": "meuftp@dropstudio.site",
+    "password": "g])%aR?r}Dh8",
+    "protocol": "ftp",
+    "port": 21,
+    "uploadOnSave": true,
+    "remotePath": "/public_html"
+  }

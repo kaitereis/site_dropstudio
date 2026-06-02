@@ -1,0 +1,26 @@
+name: Deploy Automático Dropstudio
+
+# O deploy será acionado automaticamente toda vez que houver um 'push' na branch main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Enviar arquivos para o servidor
+    runs-on: ubuntu-latest
+    steps:
+    
+    # Passo 1: Copia os arquivos do seu repositório para a máquina virtual do GitHub
+    - name: Baixando o código do repositório
+      uses: actions/checkout@v4
+    
+    # Passo 2: Conecta ao seu servidor e sincroniza apenas os arquivos alterados
+    - name: Sincronizando via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # server-dir: /public_html/  # Se o site precisar ir para dentro de uma pasta específica (como public_html ou www), descomente esta linha e ajuste o caminho.
