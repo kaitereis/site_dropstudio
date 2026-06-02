@@ -20,7 +20,7 @@ jobs:
     - name: Sincronizando via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ${{ secrets.FTP_SERVER }}
+        server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         # server-dir: /public_html/  # Se o site precisar ir para dentro de uma pasta específica (como public_html ou www), descomente esta linha e ajuste o caminho.
