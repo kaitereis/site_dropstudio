@@ -1468,7 +1468,7 @@ hero 1
 }
 .mil-hero-1 .mil-shapes .mil-s-3 {
   bottom: 0;
-  right: -32vw;
+  right: -22vw;
   width: 40vw;
   -webkit-animation: levitate-lg 4s ease-in-out infinite;
           animation: levitate-lg 4s ease-in-out infinite;
@@ -1557,7 +1557,7 @@ hero 1
   }
   .mil-hero-1 .mil-shapes .mil-s-3 {
     top: -15vw;
-    right: -25vw;
+    right: -15vw;
     width: 50vw;
   }
   .mil-hero-1.mil-sm-hero {
@@ -1606,7 +1606,7 @@ hero 1
   }
   .mil-hero-1 .mil-shapes .mil-s-3 {
     bottom: 0;
-    right: -50vw;
+    right: -38vw;
     width: 50vw;
   }
 }
@@ -3877,7 +3877,16 @@ team
 .mil-team-card {
   position: relative;
   overflow: hidden;
-  padding-bottom: 130%;
+  padding-bottom: 120%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 992px) {
+  .mil-team-card {
+    max-width: 66.67%;
+  }
 }
 .mil-team-card.mil-team-offset {
   margin-top: 60px;
@@ -3921,32 +3930,42 @@ team
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-transition: 0.4s cubic-bezier(0, 0, 0.3642, 1);
   transition: 0.4s cubic-bezier(0, 0, 0.3642, 1);
 }
 .mil-team-card .mil-hover-overlay .mil-descr {
   background-color: #D2D2D0;
-  padding: 30px;
+  padding: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-transform: translateY(40px) scale(1.04);
-          transform: translateY(40px) scale(1.04);
+  transform: translateY(40px) scale(1.04);
   -webkit-transition: 0.4s cubic-bezier(0, 0, 0.3642, 1);
   transition: 0.4s cubic-bezier(0, 0, 0.3642, 1);
+}
+
+.mil-team-card .mil-hover-overlay .mil-descr h4 {
+  font-size: 27px;
+  margin-bottom: 10px !important;
+}
+
+.mil-team-card .mil-hover-overlay .mil-descr p {
+  font-size: 16.5px;
+  line-height: 1.4;
 }
 .mil-team-card .mil-hover-overlay .mil-descr .mil-social li a {
   color: #000000;

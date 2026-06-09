@@ -1304,6 +1304,14 @@ half container
         background-color: $a2;
     }
 
+    &.mil-a1,
+    &.mil-a2 {
+        & .mil-btn {
+            color: #ffffff;
+            box-shadow: 0 0 0 2px #ffffff;
+        }
+    }
+
     &:before {
         content: '';
         position: absolute;
@@ -1406,7 +1414,14 @@ team
 .mil-team-card {
     position: relative;
     overflow: hidden;
-    padding-bottom: 130%;
+    padding-bottom: 120%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 992px) {
+        max-width: 66.67%;
+    }
 
     &.mil-team-offset {
         margin-top: 60px;
@@ -1443,18 +1458,28 @@ team
         background-color: rgba($a2, .7);
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: center;
         transition: $tmd;
 
         & .mil-descr {
             background-color: $m1;
-            padding: 30px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transform: translateY(40px) scale(1.04);
             transition: $tmd;
+
+            & h4 {
+                font-size: 27px;
+                margin-bottom: 10px !important;
+            }
+
+            & p {
+                font-size: 16.5px;
+                line-height: 1.4;
+            }
 
             & .mil-social {
                 & li a {
@@ -1610,6 +1635,7 @@ tapes
         transform: rotate(-12deg);
 
         & h4 {
+            color: #ffffff;
             white-space: nowrap;
             margin-right: 60px;
         }

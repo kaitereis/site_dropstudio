@@ -896,6 +896,7 @@ buttons
 
     &.mil-a1 {
         background-color: $a1;
+        color: #ffffff;
 
         &.mil-btn-border {
             background-color: transparent;
@@ -972,10 +973,16 @@ buttons
 
     &.mil-a1 {
         background-color: $a1;
+        & span, & i {
+            color: #ffffff;
+        }
     }
 
     &.mil-a2 {
         background-color: $a2;
+        & span, & i {
+            color: #ffffff;
+        }
     }
 
     & span {

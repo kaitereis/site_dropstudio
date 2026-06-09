@@ -115,7 +115,7 @@ hero 1
 
         & .mil-s-3 {
             bottom: 0;
-            right: -32vw;
+            right: -22vw;
             width: 40vw;
             animation: levitate-lg 4s ease-in-out infinite;
             animation-delay: .6s;
@@ -227,7 +227,7 @@ hero 1
 
             & .mil-s-3 {
                 top: -15vw;
-                right: -25vw;
+                right: -15vw;
                 width: 50vw;
             }
         }
@@ -295,7 +295,7 @@ hero 1
 
             & .mil-s-3 {
                 bottom: 0;
-                right: -50vw;
+                right: -38vw;
                 width: 50vw;
             }
         }
@@ -1143,7 +1143,7 @@ circle text
             transform: scale(1.5);
 
             & text {
-                fill: $m1;
+                fill: #ffffff;
             }
         }
 
