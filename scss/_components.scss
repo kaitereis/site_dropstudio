@@ -204,12 +204,15 @@ top panel
             height: 100px;
             flex-direction: row;
             width: auto;
-            padding: 0 30px;
+            padding: 0 15px;
+            background-color: transparent;
+            filter: none;
 
             & img {
-                width: 50px;
+                width: 65px;
                 height: auto;
                 display: block;
+                content: url("../img/home-1/logo-mobile.svg");
             }
 
             & i {

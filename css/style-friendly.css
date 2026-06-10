@@ -3056,13 +3056,17 @@ top panel
     -ms-flex-direction: row;
     flex-direction: row;
     width: auto;
-    padding: 0 30px;
+    padding: 0 15px;
+    background-color: transparent;
+    -webkit-filter: none;
+    filter: none;
   }
 
   .mil-top-panel .mil-logo img {
-    width: 50px;
+    width: 65px;
     height: auto;
     display: block;
+    content: url("../img/home-1/logo-mobile.svg");
   }
 
   .mil-top-panel .mil-logo i {
