@@ -105,6 +105,8 @@ top panel
         color: $m4;
         filter: drop-shadow(0px 0px 4px rgba($m1, .1));
 
+
+
         & i {
             font-size: 32px;
             margin-bottom: 10px;
@@ -203,6 +205,12 @@ top panel
             flex-direction: row;
             width: auto;
             padding: 0 30px;
+
+            & img {
+                width: 50px;
+                height: auto;
+                display: block;
+            }
 
             & i {
                 margin-bottom: 0;

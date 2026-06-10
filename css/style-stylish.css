@@ -2869,6 +2869,7 @@ top panel
   filter: drop-shadow(0px 0px 4px rgba(210, 210, 208, 0.1));
 }
 
+
 .mil-top-panel .mil-logo i {
   font-size: 32px;
   margin-bottom: 10px;
@@ -3001,6 +3002,12 @@ top panel
     flex-direction: row;
     width: auto;
     padding: 0 30px;
+  }
+
+  .mil-top-panel .mil-logo img {
+    width: 50px;
+    height: auto;
+    display: block;
   }
 
   .mil-top-panel .mil-logo i {

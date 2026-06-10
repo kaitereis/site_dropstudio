@@ -2904,6 +2904,7 @@ top panel
   filter: drop-shadow(0px 0px 4px rgba(53, 54, 57, 0.1));
 }
 
+
 .mil-back-to-top {
   position: fixed;
   z-index: 9999999;
@@ -3056,6 +3057,12 @@ top panel
     flex-direction: row;
     width: auto;
     padding: 0 30px;
+  }
+
+  .mil-top-panel .mil-logo img {
+    width: 50px;
+    height: auto;
+    display: block;
   }
 
   .mil-top-panel .mil-logo i {
