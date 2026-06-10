@@ -1236,6 +1236,7 @@ buttons
 .mil-stylized-btn.mil-a2 span {
   color: #ffffff;
 }
+
 .mil-stylized-btn.mil-a1 i,
 .mil-stylized-btn.mil-a2 i {
   color: #ffffff;
@@ -1658,7 +1659,7 @@ hero 1
 .mil-hero-1 .mil-shapes .mil-s-3 {
   bottom: 0;
   right: -22vw;
-  width: 40vw;
+  width: 32vw;
   -webkit-animation: levitate-lg 4s ease-in-out infinite;
   animation: levitate-lg 4s ease-in-out infinite;
   -webkit-animation-delay: 0.6s;
@@ -1763,7 +1764,7 @@ hero 1
   .mil-hero-1 .mil-shapes .mil-s-3 {
     top: -15vw;
     right: -15vw;
-    width: 50vw;
+    width: 40vw;
   }
 
   .mil-hero-1.mil-sm-hero {
@@ -1834,7 +1835,7 @@ hero 1
   .mil-hero-1 .mil-shapes .mil-s-3 {
     bottom: 0;
     right: -38vw;
-    width: 50vw;
+    width: 40vw;
   }
 }
 
@@ -2865,7 +2866,7 @@ top panel
   position: fixed;
   z-index: 9999999;
   top: 0;
-  lfeft: 0;
+  left: 0;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2881,6 +2882,8 @@ top panel
 .mil-top-panel .mil-logo {
   width: 100px;
   height: 120px;
+  padding: 10px 10px 0px 10px;
+  border-radius: 0px 0px 10px 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2894,7 +2897,7 @@ top panel
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  background-color: #353639;
+  background-color: #4a4b4b;
   text-align: center;
   color: #ECECEA;
   -webkit-filter: drop-shadow(0px 0px 4px rgba(53, 54, 57, 0.1));
@@ -4439,7 +4442,7 @@ half container
 .mil-cta .mil-shapes .mil-s-3 {
   bottom: 0;
   right: -28vw;
-  width: 40vw;
+  width: 32vw;
   -webkit-animation: levitate-lg 4s ease-in-out infinite;
   animation: levitate-lg 4s ease-in-out infinite;
   -webkit-animation-delay: 0.6s;
