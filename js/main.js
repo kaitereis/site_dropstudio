@@ -1119,3 +1119,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+/* -------------------------------------------
+
+Team card interaction (Name Tag -> Description overlay)
+
+------------------------------------------- */
+document.addEventListener('click', function (e) {
+    const nameTag = e.target.closest('.mil-team-name-tag');
+    if (nameTag) {
+        e.stopPropagation();
+        const card = nameTag.closest('.mil-team-card');
+        if (card) {
+            card.classList.add('mil-active');
+        }
+    } else {
+        const overlay = e.target.closest('.mil-team-card .mil-hover-overlay');
+        if (overlay) {
+            const card = overlay.closest('.mil-team-card');
+            if (card && card.classList.contains('mil-active')) {
+                card.classList.remove('mil-active');
+            }
+        }
+    }
+});
