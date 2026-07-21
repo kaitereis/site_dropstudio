@@ -191,7 +191,7 @@
                         <div class="mil-half-container mil-up">
                             <div class="mil-text-box mil-g-m1 mil-p-160-160">
                                 <h2 class="mil-display3 mil-rubber mil-mb60 mil-m4 mil-up">Envie uma <span class="mil-a1">mensagem</span></h2>
-                                <form id="contactForm" action="send_email.php" method="POST">
+                                <form id="contactForm" action="send_email.php" method="POST" onsubmit="return dsHandleForm(this, event)">
                                     <div class="row mil-aic">
                                         <div class="col-md-6 mil-mb30 mil-up">
                                             <input type="text" id="name" name="name" placeholder="Digite o seu nome" required>
@@ -302,52 +302,49 @@
 
     <!-- formulario via AJAX -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var form = document.getElementById('contactForm');
+        function dsHandleForm(form, e) {
+            e.preventDefault();
+
             var feedback = document.getElementById('formFeedback');
             var submitBtn = document.getElementById('submitBtn');
 
-            if (!form) return;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            feedback.style.display = 'none';
+            feedback.className = 'ds-feedback';
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
+            var formData = new FormData(form);
 
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Enviando...';
-                feedback.style.display = 'none';
-                feedback.className = 'ds-feedback';
-
-                var formData = new FormData(form);
-
-                fetch('send_email.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(function (response) {
-                    return response.text();
-                })
-                .then(function (text) {
-                    if (text.indexOf('sucesso') !== -1 || text.indexOf('success') !== -1) {
-                        feedback.textContent = '✅ Mensagem enviada com sucesso! Retornaremos em breve.';
-                        feedback.classList.add('success');
-                        form.reset();
-                    } else {
-                        feedback.textContent = '❌ Erro ao enviar. Por favor, tente novamente ou entre em contato pelo WhatsApp.';
-                        feedback.classList.add('error');
-                    }
-                    feedback.style.display = 'block';
-                })
-                .catch(function () {
-                    feedback.textContent = '❌ Falha na conexão. Verifique sua internet e tente novamente.';
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (text) {
+                if (text.indexOf('sucesso') !== -1) {
+                    feedback.textContent = '✅ Mensagem enviada com sucesso! Retornaremos em breve.';
+                    feedback.classList.add('success');
+                    form.reset();
+                } else {
+                    feedback.textContent = '❌ Erro ao enviar. Tente novamente ou fale pelo WhatsApp.';
                     feedback.classList.add('error');
-                    feedback.style.display = 'block';
-                })
-                .finally(function () {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar mensagem';
-                });
+                }
+                feedback.style.display = 'block';
+            })
+            .catch(function () {
+                feedback.textContent = '❌ Falha na conexão. Verifique sua internet e tente novamente.';
+                feedback.classList.add('error');
+                feedback.style.display = 'block';
+            })
+            .finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar mensagem';
             });
-        });
+
+            return false;
+        }
     </script>
 
     <a href="https://wa.me/5535910149295" class="whatsapp-float" target="_blank" aria-label="WhatsApp">

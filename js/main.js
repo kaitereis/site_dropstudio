@@ -23,15 +23,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const swup = new Swup({
         containers: ['#swup', '#swupMenu', '#swup-opm'],
         animateHistoryBrowsing: true,
-        linkSelector: 'a[href]:not([data-no-swup]):not([target="_blank"])',
     });
-
 
     /* -------------------------------------------
 
-    Back to top button */
+    Interceptar links com data-no-swup (forçar navegação direta,
+    ignorando o Swup em qualquer versão)
 
-   
+    ------------------------------------------- */
+
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[data-no-swup]');
+        if (!link) return;
+
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || href.startsWith('#')) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = href;
+    }, true);
+
 
     /* -------------------------------------------
 

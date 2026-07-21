@@ -196,7 +196,7 @@
                         <div class="mil-half-container mil-up">
                             <div class="mil-text-box mil-g-m1 mil-p-160-160">
                                 <h2 class="mil-display3 mil-rubber mil-mb60 mil-m4 mil-up">Bora <span class="mil-a1">conversar?</span></h2>
-                                <form id="contactForm" action="send_email.php" method="POST">
+                                <form id="contactForm" action="send_email.php" method="POST" onsubmit="return dsHandleForm(this, event)">
                                     <div class="row mil-aic">
                                         <div class="col-md-6 mil-mb30 mil-up">
                                             <input type="text" id="name" name="name" placeholder="Digite o seu nome" required>
@@ -310,59 +310,49 @@
 
     <!-- formulário via AJAX -->
     <script>
-        function initContactForm() {
-            var form = document.getElementById('contactForm');
+        function dsHandleForm(form, e) {
+            e.preventDefault();
+
             var feedback = document.getElementById('formFeedback');
             var submitBtn = document.getElementById('submitBtn');
 
-            if (!form || form.dataset.ajaxInit) return;
-            form.dataset.ajaxInit = '1';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            feedback.style.display = 'none';
+            feedback.className = 'ds-feedback';
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
+            var formData = new FormData(form);
 
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Enviando...';
-                feedback.style.display = 'none';
-                feedback.className = 'ds-feedback';
-
-                var formData = new FormData(form);
-
-                fetch('send_email.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(function (response) {
-                    return response.text();
-                })
-                .then(function (text) {
-                    if (text.indexOf('sucesso') !== -1) {
-                        feedback.textContent = '✅ Mensagem enviada com sucesso! Retornaremos em breve.';
-                        feedback.classList.add('success');
-                        form.reset();
-                    } else {
-                        feedback.textContent = '❌ Erro ao enviar. Tente novamente ou fale pelo WhatsApp.';
-                        feedback.classList.add('error');
-                    }
-                    feedback.style.display = 'block';
-                })
-                .catch(function () {
-                    feedback.textContent = '❌ Falha na conexão. Verifique sua internet e tente novamente.';
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (text) {
+                if (text.indexOf('sucesso') !== -1) {
+                    feedback.textContent = '✅ Mensagem enviada com sucesso! Retornaremos em breve.';
+                    feedback.classList.add('success');
+                    form.reset();
+                } else {
+                    feedback.textContent = '❌ Erro ao enviar. Tente novamente ou fale pelo WhatsApp.';
                     feedback.classList.add('error');
-                    feedback.style.display = 'block';
-                })
-                .finally(function () {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar mensagem';
-                });
+                }
+                feedback.style.display = 'block';
+            })
+            .catch(function () {
+                feedback.textContent = '❌ Falha na conexão. Verifique sua internet e tente novamente.';
+                feedback.classList.add('error');
+                feedback.style.display = 'block';
+            })
+            .finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar mensagem';
             });
+
+            return false;
         }
-
-        // Carregamento inicial da página
-        document.addEventListener('DOMContentLoaded', initContactForm);
-
-        // Navegação via Swup (ao voltar para esta página a partir de outra)
-        document.addEventListener('swup:pageView', initContactForm);
     </script>
 
 
