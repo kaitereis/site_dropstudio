@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f5f4f4;
+        font-size: 95.25px;
+      }
+
+      .cls-2 {
+        font-family: Poppins-Light, Poppins;
+        font-weight: 300;
+      }
+
+      .cls-3 {
+        font-family: Poppins-SemiBold, Poppins;
+        font-weight: 600;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(3.43 134.72)"><tspan class="cls-3" x="0" y="0">DROP</tspan><tspan class="cls-2" x="262.04" y="0">STUDIO</tspan></text>
+</svg>

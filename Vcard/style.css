@@ -1,0 +1,555 @@
+/* ==========================================================================
+   Design System & Custom Properties (Seção 4 & 7 do spec.md)
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --primary-magenta: #dd185a;
+    --gray-medium: #404040;
+    --gray-dark-grafite: #727272;
+    --text-light: #d6d6d6;
+    --pure-black: #000000;
+
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif;
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: radial-gradient(circle, var(--gray-dark-grafite) 0%, var(--gray-medium) 100%);
+    color: var(--text-light);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   Main Container Layout (Responsive Full Page)
+   ========================================================================== */
+.vcard-wrapper {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+/* ==========================================================================
+   Visual Hero Section (Background Layers -> Floor -> Person)
+   ========================================================================== */
+.visual-hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Container for SVGs behind the person */
+.logo-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    /* Behind floor and person */
+}
+
+/* DROPSTUDIO Text Logo (Positioned slightly lower matching the reference) */
+.svg-drop {
+    width: 300px;
+    max-width: 85%;
+    height: auto;
+    position: absolute;
+    bottom: 600px;
+    /* Anchored from bottom */
+    left: 50%;
+    transform: translateX(-50%) scale(0.92);
+    opacity: 0;
+    animation: fadeInScale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stylized D Symbol (Positioned slightly lower matching the reference) */
+.svg-symbol {
+    width: 180px;
+    height: auto;
+    position: absolute;
+    bottom: 420px;
+    /* Anchored from bottom */
+    left: 50.5%;
+    transform: translateX(-50%) scale(0.92);
+    opacity: 0;
+    animation: fadeInScale 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* Magenta Floor Bar (Taller: 22% of viewport on mobile, fixed 180px on desktop) */
+.floor-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    /* Fixed height on desktop */
+    background-color: var(--primary-magenta);
+    z-index: 2;
+    /* Behind person, in front of background/logos */
+    transform: translateY(100%);
+    animation: slideUpFloor 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+/* Central Person Wrap */
+.person-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 750px;
+    /* Fixed height on desktop */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 4;
+    /* In front of floor bar and contacts */
+    pointer-events: none;
+    /* Let clicks pass through empty spaces to buttons behind */
+}
+
+/* Central Full-body Photo (Occupying screen vertically) */
+.person-photo {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+    transform: translateY(60px);
+    opacity: 0;
+    animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+/* ==========================================================================
+   Information / Text Section (Positioned beside the torso/arm to prevent overlapping)
+   ========================================================================== */
+.info-content {
+    position: absolute;
+    bottom: 350px;
+    /* Vertically aligned beside the upper torso */
+    left: calc(51.1% - 200px);
+    /* Shifted further left to clear symbol.svg */
+    z-index: 10;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+/* Name (Regular weight, not bold, slightly smaller size) */
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: 400;
+    /* Regular weight */
+    color: var(--text-light);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 0.15rem;
+    opacity: 0;
+    animation: slideUpText 1s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Role / Job Title (Slightly smaller size) */
+.profile-role {
+    font-size: 0.69rem;
+    font-weight: 300;
+    color: var(--text-light);
+    opacity: 0;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    animation: slideUpText 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Contacts / Social Links Container (Emerges from behind eu.png)
+   ========================================================================== */
+.contacts-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    /* Behind person-wrapper (z-index 4) so it emerges from behind */
+    pointer-events: none;
+    /* Pass clicks to page, links will activate themselves */
+}
+
+/* Contact Button base style */
+.contact-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.65rem;
+    padding: 0.65rem 1rem;
+    background-color: var(--text-light);
+    /* Gray background #d6d6d6 */
+    color: #333333;
+    /* Dark text for contrast */
+    text-decoration: none;
+    border-radius: 12px;
+    /* Rounded corners */
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: var(--transition-smooth);
+    opacity: 0;
+    animation: slideUpText 1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+    pointer-events: auto;
+    /* Reactivate pointer clicks */
+    cursor: pointer;
+}
+
+/* Link Icon style */
+.contact-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--primary-magenta);
+    /* Magenta color #dd185a */
+    flex-shrink: 0;
+}
+
+/* WhatsApp Featured Button styling */
+.contact-btn.whatsapp-featured {
+    background-color: var(--primary-magenta);
+    /* Magenta background */
+    color: #ffffff;
+    /* White text */
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(221, 24, 90, 0.3);
+}
+
+.contact-btn.whatsapp-featured .contact-icon {
+    color: #ffffff;
+    /* White icon for WhatsApp */
+}
+
+/* ==========================================================================
+   DESKTOP GRID POSITIONING (Tightly packed around eu.png center line)
+   ========================================================================== */
+#site-link {
+    bottom: 240px;
+    right: calc(51% + 12px);
+    /* Ends exactly 12px to the left of the center line */
+    width: 150px;
+    animation-delay: 0.95s;
+}
+
+#email-link {
+    bottom: 190px;
+    right: calc(51% + 12px);
+    /* Ends exactly 12px to the left of the center line */
+    width: 150px;
+    animation-delay: 1.0s;
+}
+
+#instagram-link {
+    bottom: 290px;
+    left: calc(49.6% + 50px);
+    /* Starts exactly 50px to the right of the center line */
+    width: 130px;
+    animation-delay: 1.05s;
+    justify-content: flex-end;
+}
+
+#linkedin-link {
+    bottom: 240px;
+    left: calc(49.6% + 50px);
+    /* Starts exactly 50px to the right of the center line */
+    width: 130px;
+    animation-delay: 1.1s;
+    justify-content: flex-end;
+}
+
+#whatsapp-link {
+    bottom: 290px;
+    right: calc(51% + 8px);
+    /* Ends exactly 8px to the left of the center line */
+    width: 155px;
+    animation-delay: 1.15s;
+}
+
+/* Hover / Tap micro-animations */
+.contact-btn:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    background-color: #ffffff;
+}
+
+.contact-btn.whatsapp-featured:hover {
+    background-color: #f1256b;
+    /* Lighter magenta on hover */
+    box-shadow: 0 8px 20px rgba(221, 24, 90, 0.45);
+}
+
+.contact-btn:active {
+    transform: scale(0.97) translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpText {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpFloor {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Responsive Adjustments (Mobile Viewports)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .info-content {
+        top: 46.9%;
+        bottom: auto;
+        /* Adjusted to sit beside the shoulder/arm */
+        left: calc(50% - 210px);
+        /* Shifted left on mobile to prevent overlapping D logo */
+    }
+
+    .profile-name {
+        font-size: 1.1rem;
+        /* Tamanho do nome no mobile */
+    }
+
+    .profile-role {
+        font-size: 0.7rem;
+    }
+
+    .person-wrapper {
+        height: 96%;
+        height: 96dvh;
+    }
+
+    /* MOBILE MANUAL POSITIONING & SIZES */
+    #site-link {
+        top: 61.1%;
+        bottom: auto;
+        right: calc(50% + 8px);
+        width: 155px;
+    }
+
+    #email-link {
+        top: 66%;
+        bottom: auto;
+        right: calc(50% + 12px);
+        width: 150px;
+    }
+
+    #instagram-link {
+        top: 56%;
+        bottom: auto;
+        left: calc(60% + 6px);
+        width: 130px;
+    }
+
+    #linkedin-link {
+        top: 60.9%;
+        bottom: auto;
+        left: calc(60% + 6px);
+        width: 130px;
+    }
+
+    #whatsapp-link {
+        top: 56%;
+        bottom: auto;
+        right: calc(50% + 8px);
+        width: 155px;
+    }
+
+    .contact-btn {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .svg-drop {
+        width: 300px;
+        top: 18%;
+        bottom: auto;
+        /* Lowered on tablet/mobile */
+    }
+
+    .svg-symbol {
+        width: 190px;
+        /* Doubled size for tablet/mobile */
+        top: 32%;
+        bottom: auto;
+        /* Lowered on tablet/mobile */
+    }
+
+    .floor-bar {
+        height: 20%;
+        height: 20dvh;
+    }
+}
+
+/* ==========================================================================
+   Small Mobile Viewports (max-width: 400px)
+   ========================================================================== */
+@media (max-width: 400px) {
+    .info-content {
+        left: calc(58% - 190px);
+        /* Shifted left slightly more on narrow screens */
+    }
+
+    /* SMALL MOBILE MANUAL POSITIONING & SIZES */
+    #site-link {
+        right: calc(105% - 190px);
+        width: 155px;
+    }
+
+    #email-link {
+        right: calc(106% - 190px);
+        width: 150px;
+    }
+
+    #instagram-link {
+        right: calc(50% - 190px);
+        width: 130px;
+    }
+
+    #linkedin-link {
+        right: calc(51% - 190px);
+        width: 130px;
+    }
+
+    #whatsapp-link {
+        right: calc(105% - 190px);
+        width: 155px;
+    }
+
+    .contact-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .svg-drop {
+        width: 280px;
+        top: 8%;
+        /* Lowered on small mobile */
+    }
+
+    .svg-symbol {
+        width: 180px;
+        /* Doubled size for small mobile */
+        top: 20%;
+        /* Lowered on small mobile */
+    }
+}
+
+/* Landscape/Height specific adjustment for short mobile screens */
+@media (max-height: 600px) and (max-width: 768px) {
+    .info-content {
+        top: 20%;
+    }
+
+    #site-link {
+        top: 18%;
+    }
+
+    #email-link {
+        top: 25%;
+    }
+
+    #instagram-link {
+        top: 32%;
+    }
+
+    #linkedin-link {
+        top: 39%;
+    }
+
+    #whatsapp-link {
+        top: 46%;
+    }
+
+    .contact-btn {
+        padding: 0.4rem 0.6rem;
+    }
+
+    .svg-drop {
+        top: 6%;
+        width: 240px;
+    }
+
+    .svg-symbol {
+        top: 28%;
+        width: 120px;
+    }
+}

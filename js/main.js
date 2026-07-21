@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const swup = new Swup({
         containers: ['#swup', '#swupMenu', '#swup-opm'],
         animateHistoryBrowsing: true,
+        linkSelector: 'a[href]:not([data-no-swup]):not([target="_blank"])',
     });
 
 
@@ -55,63 +56,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ------------------------------------------- */
 
-    var timeline = gsap.timeline();
+    var preloaderEl = document.querySelector('.mil-preloader');
 
-    timeline
-        .to(".mil-preloader-animation", {
-            opacity: 1,
-            ease: 'sine'
-        })
-        .fromTo(".mil-animation-1 p", {
-            y: "30px",
-            opacity: 0,
-            scale: .8,
-            ease: 'sine'
-        }, {
-            y: "0px",
-            opacity: 1,
-            scale: 1,
-            stagger: 0.3,
-            webkitFilter: "blur(0px)"
-        })
-        .to(".mil-animation-1 p", {
-            opacity: 0,
-            y: '-30'
-        }, "+=0.3")
-        .fromTo(".mil-reveal-box", 0.1, {
-            x: 0
-        }, {
-            x: '-30'
-        })
-        .to(".mil-reveal-box", 0.45, {
-            width: "100%",
-            x: 0
-        }, "+=0.1")
-        .to(".mil-reveal-box", {
-            right: "0"
-        })
-        .to(".mil-reveal-box", 0.3, {
-            width: "0%"
-        })
-        .fromTo(".mil-animation-2 p", {
-            opacity: 0
-        }, {
-            opacity: 1
-        }, "-=0.5")
-        .to(".mil-animation-2 p", 0.6, {
-            opacity: 0,
-            y: '-30'
-        }, "+=0.5")
-        .to(".mil-preloader", 0.8, {
-            opacity: 0,
-            ease: 'sine'
-        }, "+=0.2")
-        .add(() => {
-            ScrollTrigger.refresh();
-        }, "-=1")
-        .add(() => {
-            document.querySelector('.mil-preloader').classList.add('mil-hidden');
-        });
+    if (!sessionStorage.getItem('dropstudio_visited')) {
+        // Primeira visita na sessão: exibe o preloader normalmente
+        sessionStorage.setItem('dropstudio_visited', '1');
+
+        var timeline = gsap.timeline();
+
+        timeline
+            .to(".mil-preloader-animation", {
+                opacity: 1,
+                ease: 'sine'
+            })
+            .fromTo(".mil-animation-1 p", {
+                y: "30px",
+                opacity: 0,
+                scale: .8,
+                ease: 'sine'
+            }, {
+                y: "0px",
+                opacity: 1,
+                scale: 1,
+                stagger: 0.3,
+                webkitFilter: "blur(0px)"
+            })
+            .to(".mil-animation-1 p", {
+                opacity: 0,
+                y: '-30'
+            }, "+=0.3")
+            .fromTo(".mil-reveal-box", 0.1, {
+                x: 0
+            }, {
+                x: '-30'
+            })
+            .to(".mil-reveal-box", 0.45, {
+                width: "100%",
+                x: 0
+            }, "+=0.1")
+            .to(".mil-reveal-box", {
+                right: "0"
+            })
+            .to(".mil-reveal-box", 0.3, {
+                width: "0%"
+            })
+            .fromTo(".mil-animation-2 p", {
+                opacity: 0
+            }, {
+                opacity: 1
+            }, "-=0.5")
+            .to(".mil-animation-2 p", 0.6, {
+                opacity: 0,
+                y: '-30'
+            }, "+=0.5")
+            .to(".mil-preloader", 0.8, {
+                opacity: 0,
+                ease: 'sine'
+            }, "+=0.2")
+            .add(() => {
+                ScrollTrigger.refresh();
+            }, "-=1")
+            .add(() => {
+                if (preloaderEl) preloaderEl.classList.add('mil-hidden');
+            });
+
+    } else {
+        // Já visitou antes nesta sessão: oculta o preloader imediatamente
+        if (preloaderEl) {
+            preloaderEl.style.opacity = '0';
+            preloaderEl.classList.add('mil-hidden');
+        }
+        ScrollTrigger.refresh();
+    }
 
     /* -------------------------------------------
 
