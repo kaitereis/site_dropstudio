@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ------------------------------------------- */
 
     const swup = new Swup({
-        containers: ['#swup', '#swupMenu', '#swup-opm'],
+        containers: ['#swup', '#swupMenu', '#swup-opm', '.mil-left-side'],
         animateHistoryBrowsing: true,
     });
 
